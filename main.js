@@ -126,7 +126,7 @@ closeIcon.onclick = function(){
   closeIcon.style.display = "none";
 };
 window.onresize = _ => {
-  if (window.innerWidth > 767) {
+  if (window.innerWidth >= 767) {
     links.style.cssText = "justify-content:center;";
     closeIcon.style.display = "none";
     barsIcon.style.display = "none";
@@ -134,43 +134,43 @@ window.onresize = _ => {
     closeIcon.style.display = "block";
     barsIcon.style.display = "block";
   }
-}
+};
 /*============= Toggle  Menu =============*/
 
 /*============= handle content =============*/
-let  changeHandle = document.querySelector("#changeHandle");//global var to push content
+let  changeHandle = document.querySelector("#changeHandle"); //global var to push content
 
 function renderDest(variable) {
+
   let count = variable || 0 ;
   let dest = myjson["destinations"][count];
 
   document.body.style.setProperty("background-image" , `url(./assets/destination/background-destination-desktop.jpg)` );
 
   changeHandle.innerHTML = `
-  <div class='dest-container' style='transition: all .5s ease'>
-    <h2><span>01</span>Pick your destination</h2>
-    <section class="dest">
-      <div class="img">
-        <img src="${dest['images']['png']}">
-      </div>
-      <div class="content">
-        <ul class="ul-for"> </ul>
-        <h1>${dest['name']}</h1>
-        <p>${dest['description']}</p>
-        <div class="results">
-          <div class="left">
-            <p>AVG. DISTANCE</p>
-            <h2>${dest['distance']}</h2>  
-          </div>
-          <div class="right">
-            <p>Est. travel time</p>
-            <h2>${dest['travel']}</h2>
-          </div>
+    <div class='dest-container' style='transition: all .5s ease'>
+      <h2><span>01</span>Pick your destination</h2>
+      <section class="dest">
+        <div class="img">
+          <img src="${dest['images']['png']}">
         </div>
-      </div>
-    </section>
-  </div>
-  
+        <div class="content">
+          <ul class="ul-for"> </ul>
+          <h1>${dest['name']}</h1>
+          <p>${dest['description']}</p>
+          <div class="results">
+            <div class="left">
+              <p>AVG. DISTANCE</p>
+              <h2>${dest['distance']}</h2>  
+            </div>
+            <div class="right">
+              <p>Est. travel time</p>
+              <h2>${dest['travel']}</h2>
+            </div>
+          </div>
+        </div>urley
+      </section>
+    </div>
   `;
   let ul  = document.querySelector('.ul-for')
   for (let i = 0; i < myjson["destinations"].length; i++) {
@@ -181,10 +181,10 @@ function renderDest(variable) {
     }
     
   }
+
   //add event listener on list items
   let lis = document.querySelectorAll(".ul-for li" );
     lis.forEach((e) => {e.addEventListener('click', function () {
-      
       
       let handle = this.innerText;
       if (handle == "mars".toUpperCase()) {
@@ -202,6 +202,70 @@ function renderDest(variable) {
 
     }
   )});
+}
+
+
+function renderCrew ( variable) {
+
+  let count = variable || 0 ;
+  let crew = myjson["crew"][count];
+
+  document.body.style.setProperty("background-image" , `url(./assets/crew/background-crew-desktop.jpg)`);
+
+  changeHandle.innerHTML = `
+    <div class="crew-container" style='transition: all .5s ease'>
+    <h2><span>02</span>Meet your crew</h2>
+      <div class="inner-crew">
+        <div class="content">
+          <h2>${crew["role"]}</h2>
+          <h1>${crew["name"]}</h1>
+          <p>${crew["bio"]}</p>
+          <ul class="ul-boolets"> </ul>
+        </div>
+        <div class="img">
+          <img src="${crew['images']['png']}" alt= "..." >
+        </div>
+      </div>
+    </div>
+  `;
+
+  let ul  = document.querySelector('.ul-boolets')
+  for (let i = 0; i < myjson["crew"].length; i++) {
+    if (myjson["crew"][i]['name'].toLowerCase() == crew['name'].toLocaleLowerCase() ) {
+      ul.innerHTML += `<li style='background-color: #fff' ><span style="opacity:0">${myjson["crew"][i]['name']}</span></li>`;
+    }else{
+      ul.innerHTML += `<li ><span style="opacity:0">${myjson["crew"][i]['name']}</span> </li>`;
+    }
+    
+  }
+
+  //add event listener on list items
+  let lis = document.querySelectorAll(".ul-boolets" );
+    lis.forEach((e) => { e.addEventListener('click', function (e) {
+      
+      let handle = e.target.innerText;
+      console.log(e.target.innerText);
+      if (handle == "Mark Shuttleworth") {
+        count = 1;
+        renderCrew(count);
+      }else if (handle == "Victor Glover") {
+        count = 2;
+        renderCrew(count);
+      }else if (handle == "Anousheh Ansari") {
+        count = 3;
+        renderCrew(count);
+      }else{
+        renderCrew(0);
+      }
+
+    }
+  )});
+
+  
+}
+
+function renderTech ( ) {
+
 }
 
 function handlingDomContent (title) {
