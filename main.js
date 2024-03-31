@@ -168,11 +168,13 @@ function renderDest(variable) {
               <h2>${dest['travel']}</h2>
             </div>
           </div>
-        </div>urley
+        </div>
       </section>
     </div>
   `;
-  let ul  = document.querySelector('.ul-for')
+
+  let ul  = document.querySelector('.ul-for');
+
   for (let i = 0; i < myjson["destinations"].length; i++) {
     if (myjson["destinations"][i]['name'].toLowerCase() == dest['name'].toLocaleLowerCase() ) {
       ul.innerHTML += `<li style='border-bottom:3px solid #fff' >${myjson["destinations"][i]['name']}</li>`;
@@ -196,7 +198,7 @@ function renderDest(variable) {
       }else if (handle == "Titan".toUpperCase()) {
         count = 3;
         renderDest(count);
-      }else{
+      }else {
         renderDest(0);
       }
 
@@ -205,7 +207,7 @@ function renderDest(variable) {
 }
 
 
-function renderCrew ( variable) {
+function renderCrew ( variable ) {
 
   let count = variable || 0 ;
   let crew = myjson["crew"][count];
@@ -254,7 +256,7 @@ function renderCrew ( variable) {
       }else if (handle == "Anousheh Ansari") {
         count = 3;
         renderCrew(count);
-      }else{
+      }else if (handle == "Douglas Hurley"){
         renderCrew(0);
       }
 
@@ -264,8 +266,75 @@ function renderCrew ( variable) {
   
 }
 
-function renderTech ( ) {
+function renderTech (variable) {
 
+  let count = variable || 0 ;
+  let technology = myjson["technology"][count];
+
+  
+
+  document.body.style.setProperty("background-image" , `url(./assets/technology/background-technology-desktop.jpg)`);
+
+  changeHandle.innerHTML = `
+    <div class="technology-container" style='transition: all .5s ease'>
+    <h2><span>03</span>SPACE LAUNCH 101</h2>
+      <div class="inner-technology">
+        <div class="content">
+          <div class="my-text">
+            <h2>THE TERMINOLOGY…</h2>
+            <h1>${technology["name"]}</h1>
+            <p>${technology["description"]}</p>
+          </div>
+          <div class="my-ul">
+            <ul class="ul-numbers"> </ul>
+          </div>
+        </div>
+        <div class="img">
+          <img src="${technology['images']['portrait']}" alt= "..." >
+        </div>
+      </div>
+    </div>
+  `;
+
+  let img =document.querySelector('.img img');
+
+ 
+  
+    if (window.innerWidth < 1150 ) {
+      img.src = technology['images']['landscape'];
+    }else {
+      img.src = technology['images']['portrait']
+    }
+  
+
+  let ul  = document.querySelector('.ul-numbers')
+  for (let i = 0; i < myjson["technology"].length; i++) {
+    if (myjson["technology"][i]['name'].toLowerCase() == technology['name'].toLowerCase() ) {
+      ul.innerHTML += `<li style=' background-color: #fff; color: var(--main-color) ; '  ><span style="opacity:0" >${myjson["technology"][i]['name']}</span></li>`;
+    }else{
+      ul.innerHTML += `<li ><span style="opacity:0" >${myjson["technology"][i]['name']}</span> </li>`;
+    }
+    
+  }
+
+  let lis = document.querySelectorAll(".ul-numbers" );
+    lis.forEach((e) => { e.addEventListener('click', function (e) {
+      
+      let handle = e.target.innerText;
+      console.log(e.target.innerText);
+
+      if (handle == "Spaceport") {
+        count = 1;
+        renderTech(count);
+      }else if (handle == "Space capsule") {
+        count = 2;
+        renderTech(count);
+      }else if (handle == "Launch vehicle"){
+        renderTech(0);
+      }
+
+    }
+  )});
 }
 
 function handlingDomContent (title) {
@@ -281,20 +350,21 @@ function handlingDomContent (title) {
   else if(title == "HOME"){
     document.body.style.setProperty("background-image" , `url(./assets/home/background-home-desktop.jpg)`)
     changeHandle.innerHTML=`
-    <div class="container">
-    <div class="text-content">
-    <h5>So, you want to travel to</h5>
-    <h1>Space</h1>
-    <p> 
-    Let’s face it; if you want to go to space, you might as well genuinely go to 
-    outer space and not hover kind of on the edge of it. Well sit back, and relax 
-    because we’ll give you a truly out of this world experience!
-    </p>
-    </div>
-    <div class="btn">
-    <a href="">Explore</a>
-    </div>
-    </div>`;
+      <div class="container">
+        <div class="text-content">
+          <h5>So, you want to travel to</h5>
+          <h1>Space</h1>
+          <p> 
+          Let’s face it; if you want to go to space, you might as well genuinely go to 
+          outer space and not hover kind of on the edge of it. Well sit back, and relax 
+          because we’ll give you a truly out of this world experience!
+          </p>
+        </div>
+        <div class="btn">
+          <a href="">Explore</a>
+        </div>
+      </div>
+    `;
   }
   
 }
